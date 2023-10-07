@@ -10,13 +10,24 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     //
-    public function login(){
-        return view("login.index");
+    /**
+     * View Authentication
+     * 
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index(){
+        return view('auth.index');
     }
 
+    public function verification(){
+        return view('auth.verification');
+    }
 
     /**
-     * Sign in the specified user in database.
+     * Generate Authorized Token
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function createToken(Request $request)
     {
@@ -24,7 +35,7 @@ class AuthController extends Controller
             'email'    => 'required|email',
             'password' => 'required'
         ]);
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->where('is_active', 1)->first();
  
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
@@ -32,9 +43,15 @@ class AuthController extends Controller
             ]);
         }
 
-        return response(["token" => $user->createToken($user->email)->plainTextToken], 200);
+        return response(['token' => $user->createToken($user->email)->plainTextToken], 200);
     }
 
+    /**
+     * Register a new User
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function createUser(Request $request){
         $request->validate([
             'name'     => 'required',
@@ -50,8 +67,12 @@ class AuthController extends Controller
             ]);
         }
         
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
         
+        return response(['email' => $user->email, 'name' => $user->name, 'uuid' => $user->id], 200);
     }
-
-
 }

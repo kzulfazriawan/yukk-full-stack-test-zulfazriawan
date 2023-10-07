@@ -6,7 +6,7 @@ mix.js("resources/js/app.js", "js")
    .less("resources/less/web.less", "css", {lessOptions: { strictMath: true }})
    .scripts([
       "node_modules/angular/angular.min.js",
-      "node_modules/angular-route/angular-route.min.js",
+      "node_modules/angular-cookies/angular-cookies.min.js",
       "node_modules/angular-sanitize/angular-sanitize.min.js",
       "node_modules/ng-file-upload/dist/ng-file-upload-all.min.js"
    ], "resources/js/scripts.js")

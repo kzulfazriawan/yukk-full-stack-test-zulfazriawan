@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/auth', [AuthController::class, 'index']);
+Route::get('/verification', [AuthController::class, 'verification']);
