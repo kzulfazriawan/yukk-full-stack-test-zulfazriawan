@@ -1,0 +1,28 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "watch": "npm run development -- --watch"
+    },
+    "devDependencies": {
+        "axios": "^1.1.2",
+        "copy-webpack-plugin": "^11.0.0",
+        "imagemin-webpack-plugin": "^2.4.2",
+        "laravel-mix": "^6.0.49",
+        "laravel-mix-imagemin": "^1.0.3",
+        "laravel-vite-plugin": "^0.8.0",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "angular": "^1.8.3",
+        "angular-cookies": "^1.8.3",
+        "angular-sanitize": "^1.8.3",
+        "imagemin-webp-webpack-plugin": "^3.3.6",
+        "less": "^4.2.0",
+        "less-loader": "^11.1.3",
+        "ng-file-upload": "^12.2.13",
+        "uikit": "^3.17.1"
+    }
+}
