@@ -73,6 +73,33 @@ class AuthController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->save();
         
-        return response(['email' => $user->email, 'name' => $user->name, 'uuid' => $user->id], 200);
+        return response(['email' => $user->email, 'verify' => base64_encode(bcrypt($user->uuid))], 200);
+    }
+
+    /**
+     * Verify new user
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function verifyUser(Request $request){
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required',
+        ]);
+
+        $uuid = base64_decode($request->token);
+        $user = User::where('email', $request->email)->where('is_active', 0)->first();
+        
+        if(! $user || ! Hash::check($user->uuid, $uuid)){
+            throw ValidationException::withMessages([
+                'email' => ['Verification email invalid.'],
+            ]);
+        }
+
+        $user->is_active = 1;
+        $user->save();
+
+        return response(['email' => $user->email, 'is_active' => $user->is_active], 200);
     }
 }

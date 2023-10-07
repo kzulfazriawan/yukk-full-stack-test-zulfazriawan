@@ -53,6 +53,7 @@ class ApiTest extends TestCase
         ];
 
         $response = $this->call('POST', '/api/v1/register', $payload);
+        $user     = $response->decodeResponseJson();
         $this->assertTrue($response->isOk());
 
         // Existing user payload
@@ -65,5 +66,15 @@ class ApiTest extends TestCase
 
         $response = $this->call('POST', '/api/v1/register', $payload);
         $this->assertFalse($response->isOk());
+
+        // Verify user data
+        $payload = [
+            'email' => $user['email'],
+            'token' => $user['verify']
+        ];
+
+        $response = $this->call('POST', '/api/v1/verification', $payload);
+        $this->assertTrue($response->isOk());
+
     }
 }

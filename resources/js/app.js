@@ -18,11 +18,18 @@ import {Http} from './http.js';
 app.factory('Http', Http);
 
 // configuration angular JS
-app.config(function($interpolateProvider, $cookiesProvider) {
+app.config(function($interpolateProvider, $cookiesProvider, $locationProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
     $cookiesProvider.secure = true;
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
 });
 
 import {LoginController} from './controller/auth.js'; 
 app.controller('LoginController', LoginController);
+
+import { VerificationController } from './controller/verification.js';
+app.controller('VerificationController', VerificationController);

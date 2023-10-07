@@ -85,7 +85,7 @@ const LoginController = ($scope, $window, $cookies, Http) => {
                 } else {
                     $scope.success.register.alert = 'Congratulations! You\'ve been Created an Account';
                     setTimeout(() => {
-                        $window.location.href = '/verification?id=' + btoa(data.uuid) + '&email=' + data.email;
+                        $window.location.href = '/verification?param_=' + btoa(data.verify + '|' + data.email);
                     }, 750);
                 }
             },
