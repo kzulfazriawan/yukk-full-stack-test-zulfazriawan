@@ -15,7 +15,6 @@ class TransactionsSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         $user = User::where('email', 'kzulfazriawan@example.com')->first()->id;
         $transactions = [
             [

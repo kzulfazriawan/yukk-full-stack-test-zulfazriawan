@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,9 @@ Route::prefix('v1')->group(function () {
 
     Route::resource('services', ServicesController::class)->only([
         'index'
+    ]);
+
+    Route::middleware('auth:sanctum')->resource('transactions', TransactionsController::class)->only([
+        'index', 'store', 'update', 'show'
     ]);
 });
