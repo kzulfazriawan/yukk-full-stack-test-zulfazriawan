@@ -33,3 +33,6 @@ app.controller('LoginController', LoginController);
 
 import { VerificationController } from './controller/verification.js';
 app.controller('VerificationController', VerificationController);
+
+import { HomeController } from './controller/home.js';
+app.controller('HomeController', HomeController);

@@ -12,7 +12,7 @@ const Http = function($http, $window, Upload)
         
         // ____if use authentication token____
         if(typeof data.authentication !== "undefined")
-            param_.headers["Authorization"] = "Token " + data.authentication;
+            param_.headers["Authorization"] = "Bearer " + data.authentication;
 
         // ____if using the data parameter____
         if(typeof data.data !== "undefined")

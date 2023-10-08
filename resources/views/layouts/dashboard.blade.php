@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="/css/uikit.min.css" />
         <link rel="stylesheet" href="/css/web.css" />
 	</head>
-    <body>
+    <body ng-app="App">
 		<div id="sidemenu" class="uk-align-left uk-margin-remove">
         </div>
         <div id="main" class="uk-container uk-container-expand uk-padding-small">

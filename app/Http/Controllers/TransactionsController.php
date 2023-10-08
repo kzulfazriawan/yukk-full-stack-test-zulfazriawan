@@ -11,6 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionsController extends Controller
 {
+    private $limit = 2;
+
     private Balances $balances;
 
     public function __construct()
@@ -25,10 +27,21 @@ class TransactionsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        return Transactions::where('user_id', $user->id)->get();
+        $transaction = Transactions::where('user_id', $user->id);
+
+        if ( $request->status )
+            $transaction->where('status', $request->status);
+
+        if ( $request->income )
+            $transaction->where('is_income', ($request->income == 'in') ? true : false);
+
+        if ( $request->page )
+            return $transaction->orderBy('created_at')->paginate($this->limit);
+
+        return $transaction->orderBy('created_at')->get();
     }
 
     /**

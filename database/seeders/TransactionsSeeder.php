@@ -36,6 +36,14 @@ class TransactionsSeeder extends Seeder
             ], [
                 'user_id'   => $user,
                 'title'     => 'transactions',
+                'amount'    => 150000,
+                'is_income' => 0,
+                'remarks'   => '',
+                'service_id'=> Services::where('name', 'GOPAY')->first()->id,
+                'status'    => 'cancel'
+            ], [
+                'user_id'   => $user,
+                'title'     => 'transactions',
                 'amount'    => 220000,
                 'is_income' => 0,
                 'remarks'   => '',
@@ -49,6 +57,14 @@ class TransactionsSeeder extends Seeder
                 'remarks'   => '',
                 'service_id'=> Services::where('name', 'BCA VA')->first()->id,
                 'status'    => 'paid'
+            ],[
+                'user_id'   => $user,
+                'title'     => 'topup.saldo',
+                'amount'    => 125000,
+                'is_income' => 1,
+                'remarks'   => '',
+                'service_id'=> Services::where('name', 'BCA VA')->first()->id,
+                'status'    => 'cancel'
             ], [
                 'user_id'   => $user,
                 'title'     => 'topup.saldo',
@@ -57,6 +73,14 @@ class TransactionsSeeder extends Seeder
                 'remarks'   => '',
                 'service_id'=> Services::where('name', 'BCA VA')->first()->id,
                 'status'    => 'paid'
+            ], [
+                'user_id'   => $user,
+                'title'     => 'topup.saldo',
+                'amount'    => 12000,
+                'is_income' => 1,
+                'remarks'   => '',
+                'service_id'=> Services::where('name', 'BCA VA')->first()->id,
+                'status'    => 'open'
             ]
         ];
 

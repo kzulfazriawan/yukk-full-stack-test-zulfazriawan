@@ -1,48 +1,70 @@
-const Home = function($scope, $rootScope, $window, Http){
-    $scope.applications = {};
-    $scope.regions      = [];
-    $scope.dealership   = [];
-    $scope.infoDealer   = null;
-    $scope.data = {
-        region: null,
-        dealership: null
+const HomeController = ($scope, $cookies, Http) => {
+    var token = $cookies.get('token');
+
+    $scope.user = {
+        balance: 0
     }
 
-    $scope.get = () => {
-        Http.sendGet('/api/v1/applications').then(
-            // success function
-            function(response){
+    $scope.transactions = {
+        data: [],
+        pagination: [],
+        page: 1,
+        status: null,
+        income: null
+    }
+
+    $scope.filter = {
+        status: ['open', 'paid', 'expired', 'cancel'],
+        income: ['in', 'out']
+    }
+
+    $scope.resetTrx = () => {
+        $scope.transactions = {
+            data: [],
+            pagination: [],
+            page: 1,
+            status: null,
+            income: null
+        }
+
+        $scope.loadTrx();
+    }
+
+    $scope.loadTrx = (target = null) => {
+        let url = (target == null) ? '/api/v1/transactions?page=' + $scope.transactions.page : target;
+
+        if($scope.transactions.status != null)
+            url += '&status=' + $scope.transactions.status;
+
+        if($scope.transactions.income != null)
+            url += '&income=' + $scope.transactions.income;
+
+        Http.sendGet(url, token).then(
+            (response) => {
                 let data = response.data;
-                data.forEach(i => {
-                    $scope.applications[i.key] = i.value;
-                });
+                $scope.transactions.pagination = data.links;
+                $scope.transactions.page = data.current_page;
+                $scope.transactions.data = data.data;
+            },
+            (response) => {
+                console.log(response);
+            }
+        );        
+    }
+
+    $scope.init = () => {
+        Http.sendGet('/api/v1/user/balance', token).then(
+            (response) => {
+                let data = response.data;
+                $scope.user.balance = data.amount;
+            },
+            (response) => {
+                console.log(response);
             }
         );
-    }
 
-    $scope.getRegions = () => {
-        Http.sendGet('/api/v1/regions').then(
-            // success function
-            function(response){
-                let data = response.data;
-                $scope.regions = data;
-            }
-        );
-    }
-
-    $scope.getDealershipRegions = (uuid) => {
-        Http.sendGet('/api/v1/regions/' + uuid).then(
-            function(response){
-                let data = response.data;
-                $scope.dealership = data.dealerships;
-            }
-        )
-    }
-
-    $scope.getDealershipChecked = () => {
-        let index = $scope.dealership.findIndex((item) => item.id == $scope.data.dealership);
-        $scope.infoDealer = $scope.dealership[index];
+        $scope.loadTrx();
     }
 }
 
-export {Home}
+export {HomeController}
