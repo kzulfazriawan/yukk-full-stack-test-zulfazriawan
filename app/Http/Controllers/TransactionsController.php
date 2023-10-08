@@ -24,6 +24,7 @@ class TransactionsController extends Controller
             return $next($request);
         });
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -38,10 +39,13 @@ class TransactionsController extends Controller
         if ( $request->income )
             $transaction->where('is_income', ($request->income == 'in') ? true : false);
 
-        if ( $request->page )
-            return $transaction->orderBy('created_at')->paginate($this->limit);
+        if ( $request->search )
+            $transaction->where('title', 'like', '%' . $request->search . '%');
 
-        return $transaction->orderBy('created_at')->get();
+        if ( $request->page )
+            return $transaction->orderByDesc('created_at')->paginate($this->limit);
+
+        return $transaction->orderByDesc('created_at')->get();
     }
 
     /**
@@ -56,7 +60,7 @@ class TransactionsController extends Controller
             'type'       => 'required'
         ]);
 
-        if ( $this->balances->amount < $request->input('amount')){
+        if ( $this->balances->amount < $request->input('amount') && $request->type != 'topup'){
             throw ValidationException::withMessages([
                 'amount' => ['The balances is less than transaction amount.'],
             ]);
@@ -104,8 +108,10 @@ class TransactionsController extends Controller
         $transaction->status = (Carbon::now()->gt($transaction->expiry)) ? 'expired' : $request->input('status');
         $transaction->save();
 
-        $this->balances->amount = ($transaction->is_income) ? $this->balances->amount + $transaction->amount : $this->balances->amount - $transaction->amount;
-        $this->balances->save();
+        if($transaction->status == 'paid'){
+            $this->balances->amount = ($transaction->is_income) ? $this->balances->amount + $transaction->amount : $this->balances->amount - $transaction->amount;
+            $this->balances->save();
+        }
 
         return response(['id' => $transaction->id], 200);
     }

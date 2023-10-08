@@ -14,8 +14,10 @@
         </div>
         <div class="uk-card-footer uk-padding-small">
             <p class="uk-text-small uk-margin-remove"><a href="/auth">Back to Login</a></p>
+            @if($show_url)
             <input type="text" class="uk-text-small uk-width-expand" readonly
                 ng-model="url" />
+            @endif
         </div>
     </div>
 

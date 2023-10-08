@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailVerification;
 use App\Models\Balances;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -22,7 +24,8 @@ class AuthController extends Controller
     }
 
     public function verification(){
-        return view('auth.verification');
+        $show_url = env('APP_SHOW_VERIFICATION_URL');
+        return view('auth.verification', ['show_url' => $show_url]);
     }
 
     /**
@@ -74,8 +77,16 @@ class AuthController extends Controller
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
         $user->save();
-        
-        return response(['email' => $user->email, 'verify' => base64_encode(bcrypt($user->uuid))], 200);
+
+        $uid = base64_encode(bcrypt($user->uuid));
+
+        if (!env('APP_SHOW_VERIFICATION_URL')){
+            Mail::to($request->email)->send(
+                new MailVerification(env('APP_URL') . '/verification?token=' . $uid . '&email=' . $user->email)
+            );
+        }
+
+        return response(['email' => $user->email, 'verify' => $uid], 200);
     }
 
     /**

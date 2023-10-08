@@ -16,7 +16,7 @@ class MailVerification extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(private $link)
     {
         //
     }
@@ -27,7 +27,7 @@ class MailVerification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mail Verification',
+            subject: 'Mail Verification Application',
         );
     }
 
@@ -37,7 +37,8 @@ class MailVerification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.verification',
+            with: ['link' => $this->link]
         );
     }
 

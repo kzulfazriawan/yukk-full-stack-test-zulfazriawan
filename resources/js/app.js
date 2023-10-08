@@ -36,3 +36,15 @@ app.controller('VerificationController', VerificationController);
 
 import { HomeController } from './controller/home.js';
 app.controller('HomeController', HomeController);
+
+import { TrxController } from './controller/trx.js';
+app.controller('TrxController', TrxController);
+
+import { TrxDetailController } from './controller/trx-detail.js';
+app.controller('TrxDetailController', TrxDetailController);
+
+import { TrxCreateController } from './controller/trx-create.js';
+app.controller('TrxCreateController', TrxCreateController);
+
+import { HeaderController } from './controller/header.js';
+app.controller('HeaderController', HeaderController);

@@ -73,7 +73,6 @@ const LoginController = ($scope, $window, $cookies, Http) => {
         Http.sendAsJson('POST', target, {data: data}).then(
             (response) => {
                 let data = response.data;
-                console.log($scope.form.is_login);
                 
                 if($scope.form.is_login){
                     $scope.success.login.alert = 'Authentication Granted! Welcome to Application';

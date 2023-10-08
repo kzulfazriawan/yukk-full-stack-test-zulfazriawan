@@ -18,38 +18,9 @@
         </div>
     </div>
 
-    <div class="uk-card uk-card-default uk-margin">
+    <div class="uk-card uk-card-default uk-margin uk-border-rounded">
         <div class="uk-card-header uk-padding-small">
-            <div class="uk-flex uk-flex-middle">
-                <div class="uk-width-auto">
-                    <div class="uk-inline">
-                        <button class="uk-button uk-button-default uk-border-rounded" type="button">Filter</button>
-                        <div uk-dropdown="mode: click" class="uk-width-large uk-border-rounded">
-                            <form class="uk-text-small" ng-submit="loadTrx()">
-                                <fieldset class="uk-fieldset">
-                                    <div class="uk-margin">
-                                        <label>Status</label>
-                                        <select class="uk-select uk-border-rounded" aria-label="Status"
-                                            ng-options="item for item in filter.status" ng-model="transactions.status">
-                                        </select>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label>Income</label>
-                                        <select class="uk-select uk-border-rounded" aria-label="Status"
-                                            ng-options="item for item in filter.income" ng-model="transactions.income">
-                                        </select>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <button type="submit" class="uk-button uk-button-primary uk-border-rounded">Filter</button>
-                                        <button type="button" class="uk-button uk-button-default uk-border-rounded" ng-click="resetTrx()">Reset</button>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <h4 class="uk-width-expand uk-margin-remove uk-text-right">History Transactions</h4>
-            </div>
+            <h4 class="uk-width-expand uk-margin-remove uk-text-right">Latest Transactions</h4>
         </div>
         <div class="uk-card-body uk-padding-small">
             <table class="uk-table uk-table-responsive uk-table-divider uk-table-small uk-text-small">
@@ -59,7 +30,7 @@
                         <th>Title</th>
                         <th>Amount</th>
                         <th>Status</th>
-                        <th>Services</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,22 +44,17 @@
                             <span uk-icon="ban" class="uk-text-danger" ng-show="item.status == 'cancel'" uk-tooltip="<% item.status %>"></span>
                             <span uk-icon="close" class="uk-text-danger" ng-show="item.status == 'expired'" uk-tooltip="<% item.status %>"></span>
                         </td>
-                        <td>Table Data</td>
+                        <td>
+                            <ul class="uk-iconnav">
+                                <li><a href="/transactions/detail/<% item.id %>" uk-tooltip="Show Detail Transaction"><span uk-icon="icon: file-text"></span></a></li>
+                            </ul>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="uk-card-footer uk-padding-small" id="summary-trx">
-            <ul class="uk-pagination" uk-margin>
-                <li
-                    ng-class="{'uk-active': item.active }" ng-repeat="item in transactions.pagination">
-                    <a href="#summary-trx" uk-scroll ng-click="loadTrx(item.url)">
-                        <span ng-if="!item.label.includes('Next') && !item.label.includes('Previous')"><% item.label %></span>
-                        <span ng-if="item.label.includes('Next')" class="uk-margin-small-left" uk-icon="chevron-right"></span>
-                        <span ng-if="item.label.includes('Previous')" class="uk-margin-small-right" uk-icon="chevron-left"></span>
-                    </a>
-                </li>
-            </ul>
+            <p class="uk-text-small"><a href="/transactions">Go to Transactions</a> | <a href="/transactions/create">Create a new Transaction</a></p>
         </div>
     </div>
 </div>

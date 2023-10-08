@@ -1,15 +1,31 @@
-import UIkit from "uikit";
+const HeaderController = function($scope, $cookies, $window, Http){
+    var token = $cookies.get('token');
 
-const Header = function($scope, $rootScope, $window, Http){
-    $scope.default = true;
+    $scope.user = {
+        balance: 0,
+        profile: {}
+    }
+    $scope.init = () => {
+        Http.sendGet('/api/v1/user/profile', token).then(
+            (response) => {
+                let data = response.data;
+                $scope.user.profile = data;
+            },
+            (response) => {
+                $window.location.href = '/auth';
+            }
+        );
 
-    var current = null;
-
-    $scope.menu = (name, target) => {
-        ( target == 'default' ) ? ( $scope.default = ( name == current ) ? true : false ) : $scope.default = false;
-        UIkit.switcher(".uk-switcher").show(name);
-        current = name;
+        Http.sendGet('/api/v1/user/balance', token).then(
+            (response) => {
+                let data = response.data;
+                $scope.user.balance = data.amount;
+            },
+            (response) => {
+                $window.location.href = '/auth';
+            }
+        );
     }
 }
 
-export {Header}
+export {HeaderController}
