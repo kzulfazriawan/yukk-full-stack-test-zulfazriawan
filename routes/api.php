@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->resource('transactions', TransactionsController::class)->only([
         'index', 'store', 'update', 'show'
     ]);
+
+    Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+        Route::get('balance', [UserController::class, 'balances']);
+    });
 });
