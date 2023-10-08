@@ -2,27 +2,121 @@
 
 .default-font{
     font-family: "Roboto Mono", monospace !important;
+    color: #f8f9fa;
 }
 
 body, h1, h2, h3, h4, h5, h6, p{
     .default-font();
 }
 
-body{
-    background-color: #f8f9fa;
+a{
+    color: #8fb996;
+    &:hover{
+        color: #a1cca5;
+    }
 }
 
-#sidemenu{
-    background-color: #469d89;
-    border-right: 1px solid #358f80;
-    height: 100vh;
-    width: 250px;
+body{
+    background-color: #00111c;
+    min-height: 100vh;
+}
+
+/* UIKIT REPLACE */
+.uk-card-default {
+    background-color: #001a2c !important;
+    border: 1px solid #415d43 !important;
+
+    .uk-card-header, .uk-card-footer{
+        border-color: #415d43 !important;
+    }
+
+    .uk-card-title{
+        color: #f8f9fa !important;
+    }
+}
+
+.uk-alert{
+    background: #0077b6 !important;
+    color: #023e8a !important;
+    border: 1px solid #023e8a !important;
+
+    &.uk-alert-success{
+        background-color: #1a759f !important;
+        border-color: #1e6091 !important;
+    }
+
+    &.uk-alert-danger{
+        background-color: #e5383b !important;
+        border-color: #a4161a !important;
+    }
+}
+
+.uk-input, .uk-select{
+    background: none !important;
+    border: 1px solid #6c757d;
+    color: #f8f9fa !important;
+
+    &:focus{
+        border-color: #adb5bd !important;
+    }
+
+    &.uk-form-danger{
+        border-color: #c9184a !important;
+    }
+}
+
+.uk-fieldset{
+    label{
+        color: #709775 !important;
+    }
+
+    .uk-text-danger{
+        color: #c9184a !important;
+    }
+}
+
+.uk-dropdown{
+    background: #001523 !important;
+    border: 1px solid #003356 !important;
+    box-shadow: 0px 3px 5px #111111;
+}
+
+.uk-button{
+    border: none !important;
+    border-bottom: 2px solid !important;
+}
+
+.uk-button-default{
+    background-color: #61a5c2 !important;
+    color: #013a63 !important;
+    border-color:#2c7da0 !important;
+
+    &:hover{
+        background-color: #89c2d9 !important;
+    }
+}
+
+.uk-button-primary{
+    background-color: #56ab91 !important;
+    color: #f8f9fa !important;
+    border-color:#469d89 !important;
+
+    &:hover{
+        background-color: #67b99a !important;
+    }
+
+    &:disabled{
+        background-color: #14746f !important;
+        color: #adb5bd !important;
+        border-color: #036666 !important;
+    }
+}
+
+.auth-container{
+    padding-top: 50px;
 }
 
 #main{
-    border-left: 2px solid #e9ecef;
-    background: none;
-
     .profile-picture-wrapper{
         margin-top: -58px;
     }

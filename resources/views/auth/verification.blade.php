@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 @section('content')
-<div class="uk-container uk-container-xsmall" ng-controller="VerificationController" ng-init="init()">
-    <div class="uk-card uk-card-default uk-margin" ng-hide="is_verified">
+<div ng-controller="VerificationController" ng-init="init()">
+    <div class="uk-card uk-card-default uk-margin uk-border-rounded" ng-hide="is_verified">
         <div class="uk-card-header uk-padding-small">
             <h4 class="uk-margin-remove">Verify your Account</h4>
         </div>
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="uk-card uk-card-default uk-margin" ng-show="is_verified">
+    <div class="uk-card uk-card-default uk-margin uk-border-rounded" ng-show="is_verified">
         <div class="uk-card-header uk-padding-small">
             <h4 class="uk-margin-remove" ng-show="verified_success">Account Verified!</h4>
             <h4 class="uk-margin-remove" ng-hide="verified_success">Activation Account ...</h4>

@@ -9,8 +9,6 @@
         <link rel="stylesheet" href="/css/web.css" />
 	</head>
     <body ng-app="App">
-		<div id="sidemenu" class="uk-align-left uk-margin-remove">
-        </div>
         <div id="main" class="uk-container uk-container-expand uk-padding-small">
             @yield('content')
         </div>

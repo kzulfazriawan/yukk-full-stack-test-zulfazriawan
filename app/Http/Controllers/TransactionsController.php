@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionsController extends Controller
 {
-    private $limit = 2;
+    private $limit = 10;
 
     private Balances $balances;
 

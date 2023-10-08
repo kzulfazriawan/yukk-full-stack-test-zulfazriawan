@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Balances;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -89,16 +91,22 @@ class AuthController extends Controller
         ]);
 
         $uuid = base64_decode($request->token);
-        $user = User::where('email', $request->email)->where('is_active', 0)->first();
+        $user = User::where('email', $request->email)->first();
         
-        if(! $user || ! Hash::check($user->uuid, $uuid)){
+        if(! $user || ! Hash::check($user->uuid, $uuid) || !is_null($user->email_verified_at)){
             throw ValidationException::withMessages([
                 'email' => ['Verification email invalid.'],
             ]);
         }
 
         $user->is_active = 1;
+        $user->email_verified_at = Carbon::now();
         $user->save();
+
+        $balance = new Balances();
+        $balance->user_id = $user->id;
+        $balance->amount  = 0;
+        $balance->save();
 
         return response(['email' => $user->email, 'is_active' => $user->is_active], 200);
     }

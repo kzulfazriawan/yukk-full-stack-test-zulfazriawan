@@ -1,11 +1,9 @@
 @extends('layouts.dashboard')
 @section('content')
 <div ng-controller="HomeController" ng-init="init()">
-    <div class="uk-card uk-card-default uk-margin">
+    <div class="uk-card uk-card-default uk-margin uk-border-rounded">
         <div class="uk-card-media-top">
-            <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="/media/pexels-johannes-plenio-cover.webp" uk-img>
-                <h1>Background Image</h1>
-                </div>
+            <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light uk-border-rounded" data-src="/media/pexels-johannes-plenio-cover.webp" uk-img></div>
         </div>
         <div class="uk-card-body uk-padding-small">
             <div class="uk-width-expand uk-flex uk-flex-inline uk-flex-bottom profile-picture-wrapper">
@@ -13,7 +11,7 @@
                     <img class="uk-border-circle profile-picture-header" src="/media/profile-placeholder.jpg" alt="Avatar">
                 </div>
                 <div class="uk-width-expand uk-text-right">
-                    <h3 class="uk-card-title uk-margin-remove-bottom">FirstName LastName</h3>
+                    <h3 class="uk-card-title uk-margin-remove-bottom"><% user.profile.name %></h3>
                     <p class="uk-text-small uk-margin-remove-top">Balances <span class="uk-label uk-text-small"><% user.balance | currency:"IDR ":0 %></span></p>
                 </div>
             </div>
@@ -25,25 +23,25 @@
             <div class="uk-flex uk-flex-middle">
                 <div class="uk-width-auto">
                     <div class="uk-inline">
-                        <button class="uk-button uk-button-default" type="button">Click</button>
-                        <div uk-dropdown="mode: click" class="uk-width-large">
+                        <button class="uk-button uk-button-default uk-border-rounded" type="button">Filter</button>
+                        <div uk-dropdown="mode: click" class="uk-width-large uk-border-rounded">
                             <form class="uk-text-small" ng-submit="loadTrx()">
                                 <fieldset class="uk-fieldset">
                                     <div class="uk-margin">
                                         <label>Status</label>
-                                        <select class="uk-select" aria-label="Status"
+                                        <select class="uk-select uk-border-rounded" aria-label="Status"
                                             ng-options="item for item in filter.status" ng-model="transactions.status">
                                         </select>
                                     </div>
                                     <div class="uk-margin">
                                         <label>Income</label>
-                                        <select class="uk-select" aria-label="Status"
+                                        <select class="uk-select uk-border-rounded" aria-label="Status"
                                             ng-options="item for item in filter.income" ng-model="transactions.income">
                                         </select>
                                     </div>
                                     <div class="uk-margin">
-                                        <button type="submit" class="uk-button uk-button-primary">Filter</button>
-                                        <button type="button" class="uk-button uk-button-default" ng-click="resetTrx()">Reset</button>
+                                        <button type="submit" class="uk-button uk-button-primary uk-border-rounded">Filter</button>
+                                        <button type="button" class="uk-button uk-button-default uk-border-rounded" ng-click="resetTrx()">Reset</button>
                                     </div>
                                 </fieldset>
                             </form>
@@ -72,7 +70,8 @@
                         <td>
                             <span uk-icon="check" class="uk-text-success" ng-show="item.status == 'paid'" uk-tooltip="<% item.status %>"></span>
                             <span uk-icon="pull" class="uk-text-primary" ng-show="item.status == 'open'" uk-tooltip="<% item.status %>"></span>
-                            <span uk-icon="ban" class="uk-text-danger" ng-show="item.status != 'paid' && item.status != 'open'" uk-tooltip="<% item.status %>"></span>
+                            <span uk-icon="ban" class="uk-text-danger" ng-show="item.status == 'cancel'" uk-tooltip="<% item.status %>"></span>
+                            <span uk-icon="close" class="uk-text-danger" ng-show="item.status == 'expired'" uk-tooltip="<% item.status %>"></span>
                         </td>
                         <td>Table Data</td>
                     </tr>

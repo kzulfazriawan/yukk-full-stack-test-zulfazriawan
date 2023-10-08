@@ -38,5 +38,6 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->prefix('user')->group(function () {
         Route::get('balance', [UserController::class, 'balances']);
+        Route::get('profile', [UserController::class, 'index']);
     });
 });
